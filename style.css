@@ -183,12 +183,12 @@ html[dir="ltr"] .lang-dropdown-content {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Enhanced Hero Section --- */
+/* --- Hero Section (Oil & Gas Refinery Background) --- */
 .hero {
     position: relative;
     min-height: 90vh;
-    background: linear-gradient(135deg, rgba(11, 30, 54, 0.92) 0%, rgba(10, 25, 47, 0.88) 100%), 
-                url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+    background: linear-gradient(135deg, rgba(11, 30, 54, 0.93) 0%, rgba(10, 25, 47, 0.88) 100%), 
+                url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
     display: flex;
     align-items: center;
     text-align: right;
