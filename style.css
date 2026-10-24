@@ -183,7 +183,7 @@ html[dir="ltr"] .lang-dropdown-content {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Hero Section (Oil & Gas Refinery Background) --- */
+/* --- Hero Section --- */
 .hero {
     position: relative;
     min-height: 90vh;
@@ -421,60 +421,131 @@ html[dir="ltr"] .stat-box {
     line-height: 1.8;
 }
 
-/* --- Services Section --- */
+/* --- Services Section (Accordion Styles for 9 Boxes) --- */
 .services {
     background-color: var(--gray-bg);
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 25px;
 }
 
-.service-card {
+.accordion-card {
     background: #ffffff;
-    padding: 35px 30px;
+    padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border-bottom: 3px solid transparent;
-    position: relative;
-    top: 0;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
 }
 
-.service-card:hover {
-    top: -8px;
-    box-shadow: 0 20px 40px rgba(11, 30, 54, 0.12);
-    border-bottom-color: var(--accent-amber);
+.accordion-card:hover {
+    border-color: var(--accent-amber);
+    box-shadow: 0 12px 30px rgba(11, 30, 54, 0.08);
 }
 
-.service-icon {
-    font-size: 34px;
+.service-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.service-card-header .service-icon {
+    font-size: 28px;
     color: var(--accent-amber);
-    margin-bottom: 20px;
 }
 
-.service-card h3 {
+.service-card-header h3 {
     color: var(--primary-navy);
-    font-size: 20px;
-    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    flex-grow: 1;
 }
 
-.service-card p {
+.accordion-icon {
+    font-size: 14px;
+    color: #64748b;
+    background: var(--gray-bg);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.accordion-card.active .accordion-icon {
+    transform: rotate(45deg);
+    background: var(--accent-amber);
+    color: #ffffff;
+}
+
+.service-summary {
     color: #64748b;
     font-size: 14px;
-    line-height: 1.7;
+    margin-top: 15px;
+    line-height: 1.6;
 }
 
-/* --- Projects Section --- */
+.service-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, margin-top 0.3s ease;
+}
+
+.accordion-card.active .service-details {
+    max-height: 300px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #cbd5e1;
+}
+
+.sub-service-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sub-service-list li {
+    font-size: 13.5px;
+    color: #334155;
+    position: relative;
+    padding-right: 18px;
+}
+
+html[dir="ltr"] .sub-service-list li {
+    padding-right: 0;
+    padding-left: 18px;
+}
+
+.sub-service-list li::before {
+    content: "•";
+    color: var(--accent-amber);
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    right: 0;
+    top: -2px;
+}
+
+html[dir="ltr"] .sub-service-list li::before {
+    right: auto;
+    left: 0;
+}
+
+/* --- Projects Section (Balanced Grid with Wide Cards) --- */
 .projects {
     background-color: #ffffff;
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
 
@@ -494,6 +565,11 @@ html[dir="ltr"] .stat-box {
     transform: translateY(-5px);
 }
 
+/* Wide cards span across columns to perfectly balance the 5-card grid */
+.project-card-wide {
+    grid-column: span 1.5;
+}
+
 .project-tag {
     display: inline-block;
     background: rgba(217, 119, 6, 0.2);
@@ -507,13 +583,28 @@ html[dir="ltr"] .stat-box {
 
 .project-card h3 {
     font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+}
+
+.project-client {
+    color: #f59e0b;
+    font-size: 13px;
+    margin-bottom: 15px;
 }
 
 .project-card p {
     color: #94a3b8;
     font-size: 14px;
     line-height: 1.7;
+}
+
+@media (max-width: 992px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    .project-card-wide {
+        grid-column: span 1;
+    }
 }
 
 /* --- Features Section --- */
