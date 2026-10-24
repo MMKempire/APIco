@@ -1,78 +1,51 @@
-// Mobile Menu Toggle
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const navMenu = document.getElementById('navMenu');
-
-mobileMenuBtn.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    const icon = mobileMenuBtn.querySelector('i');
-    if (navMenu.classList.contains('active')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-xmark');
-    } else {
-        icon.classList.remove('fa-xmark');
-        icon.classList.add('fa-bars');
-    }
-});
-
-// Close mobile menu when clicking a link
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        const icon = mobileMenuBtn.querySelector('i');
-        icon.classList.remove('fa-xmark');
-        icon.classList.add('fa-bars');
-    });
-});
-
-// Bilingual Language Switcher (Persian / English)
+// پشتیبانی از ۳ زبان: 'fa', 'en', 'ar'
 let currentLang = 'fa';
 
 function toggleLanguage() {
-    currentLang = currentLang === 'fa' ? 'en' : 'fa';
     const htmlRoot = document.getElementById('htmlRoot');
     const langText = document.getElementById('langText');
+    const translatableElements = document.querySelectorAll('[data-fa]');
 
-    if (currentLang === 'en') {
+    if (currentLang === 'fa') {
+        currentLang = 'en';
         htmlRoot.setAttribute('lang', 'en');
         htmlRoot.setAttribute('dir', 'ltr');
-        langText.textContent = 'فارسی';
+        langText.innerText = 'العربية';
+    } else if (currentLang === 'en') {
+        currentLang = 'ar';
+        htmlRoot.setAttribute('lang', 'ar');
+        htmlRoot.setAttribute('dir', 'rtl');
+        langText.innerText = 'فارسی';
     } else {
+        currentLang = 'fa';
         htmlRoot.setAttribute('lang', 'fa');
         htmlRoot.setAttribute('dir', 'rtl');
-        langText.textContent = 'English';
+        langText.innerText = 'English';
     }
 
-    // Translate all elements with data-fa and data-en
-    document.querySelectorAll('[data-fa][data-en]').forEach(el => {
-        if (currentLang === 'en') {
-            el.textContent = el.getAttribute('data-en');
-        } else {
-            el.textContent = el.getAttribute('data-fa');
-        }
-    });
-
-    // Translate placeholders
-    document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(input => {
-        if (currentLang === 'en') {
-            if (input.getAttribute('id') === 'name') input.setAttribute('placeholder', 'Full Name / Company Name...');
-            if (input.getAttribute('id') === 'email') input.setAttribute('placeholder', 'Email or Phone...');
-            if (input.getAttribute('id') === 'message') input.setAttribute('placeholder', 'Describe your project or requirement...');
-        } else {
-            if (input.getAttribute('id') === 'name') input.setAttribute('placeholder', 'نام و نام خانوادگی / نام شرکت...');
-            if (input.getAttribute('id') === 'email') input.setAttribute('placeholder', 'ایمیل یا شماره تماس...');
-            if (input.getAttribute('id') === 'message') input.setAttribute('placeholder', 'شرح درخواست یا پروژه...');
+    // تغییر متن تمام المان‌ها براساس زبان انتخابی
+    translatableElements.forEach(el => {
+        const newText = el.getAttribute(`data-${currentLang}`);
+        if (newText) {
+            if (el.children.length > 0 && el.querySelector('i')) {
+                // حفظ آیکون‌ها در صورت وجود
+                const icon = el.querySelector('i').outerHTML;
+                el.innerHTML = newText + ' ' + icon;
+            } else {
+                el.innerText = newText;
+            }
         }
     });
 }
 
-// Contact Form Handler Simulation
-function handleFormSubmit(event) {
-    event.preventDefault();
-    const successMsg = document.getElementById('formSuccess');
-    successMsg.style.display = 'block';
-    
-    setTimeout(() => {
-        document.getElementById('contactForm').reset();
-        successMsg.style.display = 'none';
-    }, 4000);
-}
+// منوی موبایل
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    }
+});
