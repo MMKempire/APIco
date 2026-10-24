@@ -183,12 +183,12 @@ html[dir="ltr"] .lang-dropdown-content {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Hero Section --- */
+/* --- Hero Section (Refined High-End Industrial Refinery Background) --- */
 .hero {
     position: relative;
     min-height: 90vh;
-    background: linear-gradient(135deg, rgba(11, 30, 54, 0.93) 0%, rgba(10, 25, 47, 0.88) 100%), 
-                url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+    background: linear-gradient(135deg, rgba(7, 22, 41, 0.94) 0%, rgba(10, 25, 47, 0.89) 100%), 
+                url('https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
     display: flex;
     align-items: center;
     text-align: right;
@@ -421,124 +421,53 @@ html[dir="ltr"] .stat-box {
     line-height: 1.8;
 }
 
-/* --- Services Section (Accordion Styles for 9 Boxes) --- */
+/* --- Services Section (9 Static Boxes) --- */
 .services {
     background-color: var(--gray-bg);
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
 }
 
-.accordion-card {
+.service-card {
     background: #ffffff;
-    padding: 30px;
+    padding: 35px 30px;
     border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
-    border: 1px solid #e2e8f0;
-    transition: all 0.3s ease;
-}
-
-.accordion-card:hover {
-    border-color: var(--accent-amber);
-    box-shadow: 0 12px 30px rgba(11, 30, 54, 0.08);
-}
-
-.service-card-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-}
-
-.service-card-header .service-icon {
-    font-size: 28px;
-    color: var(--accent-amber);
-}
-
-.service-card-header h3 {
-    color: var(--primary-navy);
-    font-size: 18px;
-    font-weight: 700;
-    flex-grow: 1;
-}
-
-.accordion-icon {
-    font-size: 14px;
-    color: #64748b;
-    background: var(--gray-bg);
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.accordion-card.active .accordion-icon {
-    transform: rotate(45deg);
-    background: var(--accent-amber);
-    color: #ffffff;
-}
-
-.service-summary {
-    color: #64748b;
-    font-size: 14px;
-    margin-top: 15px;
-    line-height: 1.6;
-}
-
-.service-details {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, margin-top 0.3s ease;
-}
-
-.accordion-card.active .service-details {
-    max-height: 300px;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px dashed #cbd5e1;
-}
-
-.sub-service-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.sub-service-list li {
-    font-size: 13.5px;
-    color: #334155;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-bottom: 3px solid transparent;
     position: relative;
-    padding-right: 18px;
+    top: 0;
 }
 
-html[dir="ltr"] .sub-service-list li {
-    padding-right: 0;
-    padding-left: 18px;
+.service-card:hover {
+    top: -8px;
+    box-shadow: 0 20px 40px rgba(11, 30, 54, 0.12);
+    border-bottom-color: var(--accent-amber);
 }
 
-.sub-service-list li::before {
-    content: "•";
+.service-icon {
+    font-size: 34px;
     color: var(--accent-amber);
-    font-weight: bold;
-    font-size: 18px;
-    position: absolute;
-    right: 0;
-    top: -2px;
+    margin-bottom: 20px;
 }
 
-html[dir="ltr"] .sub-service-list li::before {
-    right: auto;
-    left: 0;
+.service-card h3 {
+    color: var(--primary-navy);
+    font-size: 20px;
+    margin-bottom: 15px;
 }
 
-/* --- Projects Section (Balanced Grid with Wide Cards) --- */
+.service-card p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* --- Projects Section (Balanced 3-Column Grid with Spanning Wide Cards) --- */
 .projects {
     background-color: #ffffff;
 }
@@ -565,7 +494,7 @@ html[dir="ltr"] .sub-service-list li::before {
     transform: translateY(-5px);
 }
 
-/* Wide cards span across columns to perfectly balance the 5-card grid */
+/* Make bottom 2 cards span 1.5 columns each to perfectly balance the 5-card grid */
 .project-card-wide {
     grid-column: span 1.5;
 }
