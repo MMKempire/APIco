@@ -1,34 +1,31 @@
-// پشتیبانی از ۳ زبان: 'fa', 'en', 'ar'
 let currentLang = 'fa';
 
-function toggleLanguage() {
+function selectLanguage(lang) {
+    currentLang = lang;
     const htmlRoot = document.getElementById('htmlRoot');
-    const langText = document.getElementById('langText');
+    const langLabel = document.getElementById('langLabel');
     const translatableElements = document.querySelectorAll('[data-fa]');
 
-    if (currentLang === 'fa') {
-        currentLang = 'en';
+    // تنظیم زبان و جهت صفحه (RTL / LTR)
+    if (lang === 'en') {
         htmlRoot.setAttribute('lang', 'en');
         htmlRoot.setAttribute('dir', 'ltr');
-        langText.innerText = 'العربية';
-    } else if (currentLang === 'en') {
-        currentLang = 'ar';
+        langLabel.innerText = 'English';
+    } else if (lang === 'ar') {
         htmlRoot.setAttribute('lang', 'ar');
         htmlRoot.setAttribute('dir', 'rtl');
-        langText.innerText = 'فارسی';
+        langLabel.innerText = 'العربية';
     } else {
-        currentLang = 'fa';
         htmlRoot.setAttribute('lang', 'fa');
         htmlRoot.setAttribute('dir', 'rtl');
-        langText.innerText = 'English';
+        langLabel.innerText = 'فارسی';
     }
 
-    // تغییر متن تمام المان‌ها براساس زبان انتخابی
+    // جایگزینی متن‌ها براساس زبان انتخابی
     translatableElements.forEach(el => {
-        const newText = el.getAttribute(`data-${currentLang}`);
+        const newText = el.getAttribute(`data-${lang}`);
         if (newText) {
             if (el.children.length > 0 && el.querySelector('i')) {
-                // حفظ آیکون‌ها در صورت وجود
                 const icon = el.querySelector('i').outerHTML;
                 el.innerHTML = newText + ' ' + icon;
             } else {
@@ -36,10 +33,30 @@ function toggleLanguage() {
             }
         }
     });
+
+    // بستن منوی کشویی پس از انتخاب
+    const dropdown = document.getElementById('langDropdown');
+    if (dropdown) dropdown.classList.remove('show');
 }
 
-// منوی موبایل
 document.addEventListener('DOMContentLoaded', () => {
+    // باز و بسته شدن منوی کشویی زبان
+    const currentLangBtn = document.getElementById('currentLangBtn');
+    const langDropdown = document.getElementById('langDropdown');
+
+    if (currentLangBtn && langDropdown) {
+        currentLangBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('show');
+        });
+
+        // بستن منو با کلیک بیرون از آن
+        document.addEventListener('click', () => {
+            langDropdown.classList.remove('show');
+        });
+    }
+
+    // منوی موبایل
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.getElementById('navMenu');
 
