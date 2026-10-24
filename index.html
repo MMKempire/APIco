@@ -105,7 +105,7 @@
             </div>
             
             <div class="services-grid">
-                <!-- Service 1: Industrial Site Evaluation & Troubleshooting -->
+                <!-- Service 1 -->
                 <div class="service-card">
                     <div class="service-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
                     <h3 data-fa="مشاوره و ارزیابی سایت‌های صنعتی" data-en="Industrial Plant Consulting & Evaluation">مشاوره و ارزیابی سایت‌های صنعتی</h3>
@@ -245,18 +245,19 @@
                 </div>
 
                 <div class="contact-form-box">
-                    <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                    <!-- فرم متصل به Formspree -->
+                    <form action="https://formspree.io/f/xjyykbon" method="POST">
                         <div class="form-group">
                             <label for="name" data-fa="نام و نام خانوادگی / نام شرکت" data-en="Full Name / Company Name">نام و نام خانوادگی / نام شرکت</label>
-                            <input type="text" id="name" required placeholder="...">
+                            <input type="text" id="name" name="name" required placeholder="...">
                         </div>
                         <div class="form-group">
                             <label for="email" data-fa="ایمیل یا شماره تماس" data-en="Email or Phone Number">ایمیل یا شماره تماس</label>
-                            <input type="text" id="email" required placeholder="...">
+                            <input type="text" id="email" name="_replyto" required placeholder="...">
                         </div>
                         <div class="form-group">
                             <label for="service" data-fa="نوع خدمت مورد نیاز" data-en="Required Service">نوع خدمت مورد نیاز</label>
-                            <select id="service">
+                            <select id="service" name="service">
                                 <option data-fa="مشاوره و ارزیابی سایت‌های صنعتی" data-en="Industrial Plant Evaluation">مشاوره و ارزیابی سایت‌های صنعتی</option>
                                 <option data-fa="طراحی Basic & Detail" data-en="Basic & Detail Design">طراحی Basic & Detail</option>
                                 <option data-fa="خرید و تأمین کالا" data-en="Procurement">خرید و تأمین کالا</option>
@@ -268,8 +269,12 @@
                         </div>
                         <div class="form-group">
                             <label for="message" data-fa="شرح درخواست یا پروژه" data-en="Project Description">شرح درخواست یا پروژه</label>
-                            <textarea id="message" rows="4" required placeholder="..."></textarea>
+                            <textarea id="message" name="message" rows="4" required placeholder="..."></textarea>
                         </div>
+                        
+                        <!-- فیلد مخفی برای موضوع ایمیل دریافتی در صندوق شما -->
+                        <input type="hidden" name="_subject" value="پیام جدید از فرم تماس وب‌سایت APIoil">
+
                         <button type="submit" class="btn btn-primary btn-block" data-fa="ارسال درخواست" data-en="Send Request">ارسال درخواست</button>
                         <div id="formSuccess" class="form-success-msg" style="display:none;" data-fa="پیام شما با موفقیت ثبت شد. به زودی با شما تماس خواهیم گرفت." data-en="Your message has been successfully sent. We will contact you soon.">پیام شما با موفقیت ثبت شد. به زودی با شما تماس خواهیم گرفت.</div>
                     </form>
@@ -311,6 +316,7 @@
             <div class="container">
                 <p data-fa="© ۱۴۰۵ شرکت اندیشمندان پترو صنعت آداک (API). تمامی حقوق محفوظ است." data-en="© 2026 Andishmandan Petro Sanat Adak Co. (API). All Rights Reserved.">© ۱۴۰۵ شرکت اندیشمندان پترو صنعت آداک (API). تمامی حقوق محفوظ است.</p>
             </div>
+        </div>
     </footer>
 
     <!-- Custom Script -->
