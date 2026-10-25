@@ -1,46 +1,22 @@
-let currentLang = 'fa';
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Mobile Menu Toggle ---
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
 
-function selectLanguage(lang) {
-    currentLang = lang;
-    const htmlRoot = document.getElementById('htmlRoot');
-    const langLabel = document.getElementById('langLabel');
-    const translatableElements = document.querySelectorAll('[data-fa]');
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
 
-    // تنظیم زبان و جهت صفحه (RTL / LTR)
-    if (lang === 'en') {
-        htmlRoot.setAttribute('lang', 'en');
-        htmlRoot.setAttribute('dir', 'ltr');
-        langLabel.innerText = 'English';
-    } else if (lang === 'ar') {
-        htmlRoot.setAttribute('lang', 'ar');
-        htmlRoot.setAttribute('dir', 'rtl');
-        langLabel.innerText = 'العربية';
-    } else {
-        htmlRoot.setAttribute('lang', 'fa');
-        htmlRoot.setAttribute('dir', 'rtl');
-        langLabel.innerText = 'فارسی';
+        // Close menu when clicking a link
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
     }
 
-    // جایگزینی متن‌ها براساس زبان انتخابی
-    translatableElements.forEach(el => {
-        const newText = el.getAttribute(`data-${lang}`);
-        if (newText) {
-            if (el.children.length > 0 && el.querySelector('i')) {
-                const icon = el.querySelector('i').outerHTML;
-                el.innerHTML = newText + ' ' + icon;
-            } else {
-                el.innerText = newText;
-            }
-        }
-    });
-
-    // بستن منوی کشویی پس از انتخاب
-    const dropdown = document.getElementById('langDropdown');
-    if (dropdown) dropdown.classList.remove('show');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    // باز و بسته شدن منوی کشویی زبان
+    // --- Language Dropdown Toggle ---
     const currentLangBtn = document.getElementById('currentLangBtn');
     const langDropdown = document.getElementById('langDropdown');
 
@@ -50,19 +26,97 @@ document.addEventListener('DOMContentLoaded', () => {
             langDropdown.classList.toggle('show');
         });
 
-        // بستن منو با کلیک بیرون از آن
-        document.addEventListener('click', () => {
+        window.addEventListener('click', () => {
             langDropdown.classList.remove('show');
         });
     }
 
-    // منوی موبایل
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navMenu = document.getElementById('navMenu');
+    // --- Contact Form AJAX Submission (Prevents Formspree Redirect & Clears Form) ---
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+    const submitBtn = document.getElementById('submitBtn');
 
-    if (mobileMenuBtn && navMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault(); // جلوگیری از رفتن به صفحه formspree
+
+            const formData = new FormData(contactForm);
+            
+            // تغییر حالت دکمه در حین ارسال
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = "در حال ارسال...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // نمایش پیام موفقیت
+                    formSuccess.style.display = 'block';
+                    // پاک کردن محتویات فرم
+                    contactForm.reset();
+                    
+                    // مخفی کردن پیام بعد از 6 ثانیه
+                    setTimeout(() => {
+                        formSuccess.style.display = 'none';
+                    }, 6000);
+                } else {
+                    alert('خطایی در ارسال پیام رخ داد. لطفاً مجدداً تلاش کنید.');
+                }
+            } catch (error) {
+                alert('خطا در اتصال به سرور. لطفاً اینترنت خود را بررسی کنید.');
+            } finally {
+                // بازگردانی حالت دکمه
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
         });
     }
 });
+
+// --- Multilingual Support Function ---
+function selectLanguage(lang) {
+    const htmlRoot = document.getElementById('htmlRoot');
+    const langLabel = document.getElementById('langLabel');
+    
+    // Set Direction & Lang attribute
+    if (lang === 'ar') {
+        htmlRoot.setAttribute('dir', 'rtl');
+        htmlRoot.setAttribute('lang', 'ar');
+        langLabel.textContent = 'العربية';
+    } else if (lang === 'en') {
+        htmlRoot.setAttribute('dir', 'ltr');
+        htmlRoot.setAttribute('lang', 'en');
+        langLabel.textContent = 'English';
+    } else {
+        htmlRoot.setAttribute('dir', 'rtl');
+        htmlRoot.setAttribute('lang', 'fa');
+        langLabel.textContent = 'فارسی';
+    }
+
+    // Translate all elements having data attributes
+    const translatableElements = document.querySelectorAll('[data-fa], [data-en], [data-ar]');
+    
+    translatableElements.forEach(el => {
+        if (el.hasAttribute(`data-${lang}`)) {
+            const text = el.getAttribute(`data-${lang}`);
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = text;
+            } else {
+                el.textContent = text;
+            }
+        }
+    });
+
+    // Close dropdown
+    const langDropdown = document.getElementById('langDropdown');
+    if (langDropdown) {
+        langDropdown.classList.remove('show');
+    }
+}
